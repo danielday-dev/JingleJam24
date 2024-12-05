@@ -1,10 +1,30 @@
 var inputActive = !Animator_isActive();
-
 if (!inputActive) return;
 
-if (currentGameState != targetGameState)
+///////////////////////////////////////////////////////
+if (currentGameState != targetGameState) {
+	var enterState = [ false, true ];
+	var enterGameStates = [ currentGameState, targetGameState ];
+	var stateLen = min(array_length(enterState), array_length(enterGameStates));
+	for (var stateIndex = 0; stateIndex < stateLen; stateIndex++) {
+		var enteringState = enterState[stateIndex];
+		
+		///////////////////////////////////////////////////////
+		//		Handle on state change.
+		///////////////////////////////////////////////////////
+		switch (enterGameStates[stateIndex]) {
+			case GameState.Campfire: {
+				setGUIVisibility("Campfire", enteringState); 
+				Animator_dispatch(0.2, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.4 : 0.0 });
+			} break;
+		}
+	}
 	currentGameState = targetGameState;
-
+}
+	
+///////////////////////////////////////////////////////
+//		Handle live actions / inputs.
+///////////////////////////////////////////////////////
 switch (currentGameState) {
 	case GameState.Level: {
 		if (mouse_check_button_pressed(mb_left)) {
@@ -17,46 +37,16 @@ switch (currentGameState) {
 				}
 				
 				//targetGameState = GameState.Combat;
-				var animationInfo = {
+				Animator_dispatch(0.5, AnimationType.Position, AnimationInterpolation.EaseSine,  {
 					target: obj_player,
 					startPos: new Vector2(obj_player.x, obj_player.y),
 					endPos: new Vector2(mx, my)
-				};
-				Animator_dispatch(new AnimationInformation(
-					0.5,
-					AnimationType.Position, 
-					AnimationInterpolation.EaseSine, 
-					animationInfo
-				));
+				});
 			}
 		}
 	} break;
+	
 	case GameState.Campfire: {
-		var animationInfo = {};
-		if (campfireStart) {
-			animationInfo = {
-				target: obj_art_campfire,
-				startPos: obj_art_campfire.offPos,
-				endPos: obj_art_campfire.startPos
-			};
-			
-			campfireStart = false;
-		} else {
-			animationInfo = {
-				target: obj_art_campfire,
-				startPos: obj_art_campfire.startPos,
-				endPos: obj_art_campfire.offPos
-			};
-			
-			campfireStart = true;
-			targetGameState = GameState.Level;			
-		}
-		Animator_dispatch(new AnimationInformation(
-			1.0,
-			AnimationType.Position, 
-			AnimationInterpolation.EaseSine, 
-			animationInfo
-		));
+		if (mouse_check_button_pressed(mb_left)) targetGameState = GameState.Level;
 	} break;
-
 }

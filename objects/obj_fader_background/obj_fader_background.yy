@@ -1,17 +1,17 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_art_campfire",
+  "name": "obj_fader_background",
   "eventList": [],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "GUI",
-    "path": "folders/Objects/GUI.yy",
+    "name": "Background",
+    "path": "folders/Objects/Background.yy",
   },
   "parentObjectId": {
-    "name": "obj_gui_base",
-    "path": "objects/obj_gui_base/obj_gui_base.yy",
+    "name": "obj_fader_base",
+    "path": "objects/obj_fader_base/obj_fader_base.yy",
   },
   "persistent": false,
   "physicsAngularDamping": 0.1,
@@ -26,12 +26,11 @@
   "physicsShape": 1,
   "physicsShapePoints": [],
   "physicsStartAwake": true,
-  "properties": [],
+  "properties": [
+    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"depth","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"-9998","varType":0,},
+  ],
   "solid": false,
-  "spriteId": {
-    "name": "spr_art_campfire",
-    "path": "sprites/spr_art_campfire/spr_art_campfire.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

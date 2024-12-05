@@ -1,18 +1,17 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_art_campfire",
-  "eventList": [],
+  "name": "obj_gui_base",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+  ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
     "name": "GUI",
     "path": "folders/Objects/GUI.yy",
   },
-  "parentObjectId": {
-    "name": "obj_gui_base",
-    "path": "objects/obj_gui_base/obj_gui_base.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -28,10 +27,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_art_campfire",
-    "path": "sprites/spr_art_campfire/spr_art_campfire.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

@@ -1,5 +1,6 @@
 enum AnimationType {
 	Position,
+	GUIFade, BackgroundFade,
 };
 enum AnimationInterpolation {
 	Linear,
@@ -28,6 +29,11 @@ function AnimationInformation(_totalSeconds, _type, _interpolation, _args) const
 		return true;
 	}
 	
+	switch (type) {
+		case AnimationType.GUIFade: args.startFade = obj_fader_gui.fadeAmount; break;
+		case AnimationType.BackgroundFade: args.startFade = obj_fader_background.fadeAmount; break;
+	}
+	
 	static update = function() {
 		switch (type) {
 			case AnimationType.Position: {
@@ -38,6 +44,15 @@ function AnimationInformation(_totalSeconds, _type, _interpolation, _args) const
 				with (args.target) {	
 					x = pos.x;
 					y = pos.y;
+				}
+			} break;
+			case AnimationType.GUIFade:
+			case AnimationType.BackgroundFade: {
+				if (!hasAllArgs([ "fade", "startFade" ])) break;
+				var fade = lerp(args.startFade, args.fade, getTime());
+				switch (type) {
+					case AnimationType.GUIFade: obj_fader_gui.fadeAmount = fade; break;
+					case AnimationType.BackgroundFade: obj_fader_background.fadeAmount = fade; break;
 				}
 			} break;
 		}

@@ -1,6 +1,8 @@
-function Animator_dispatch(_animationInformation){
+function Animator_dispatch(_totalSeconds, _type, _interpolation, _args){
 	with (obj_animator) {
-		animationList[array_length(animationList)] = _animationInformation;
+		animationList[array_length(animationList)] = new AnimationInformation(
+			_totalSeconds, _type, _interpolation, _args
+		);
 	}
 }
 function Animator_isActive(){

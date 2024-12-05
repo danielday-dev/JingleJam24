@@ -1,0 +1,1 @@
+registerGUIElement(layer_get_name(layer), id);
