@@ -12,4 +12,6 @@ switch (currentGameState) {
 	} break;
 }
 
-
+draw_rectangle(50, 50, 150, 150, true)
+draw_number(50, 50, 100, 100, (get_timer() / 100000), true, 0);
+draw_number(150, 50, 100, 100, -(get_timer() / 100000), true, 0);
