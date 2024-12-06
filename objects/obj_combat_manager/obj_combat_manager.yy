@@ -1,19 +1,21 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_enemy_test",
+  "name": "obj_combat_manager",
   "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Entities",
-    "path": "folders/Objects/Entities.yy",
+    "name": "Combat",
+    "path": "folders/Objects/GUI/Combat.yy",
   },
   "parentObjectId": {
-    "name": "obj_entity_base",
-    "path": "objects/obj_entity_base/obj_entity_base.yy",
+    "name": "obj_gui_base",
+    "path": "objects/obj_gui_base/obj_gui_base.yy",
   },
   "persistent": false,
   "physicsAngularDamping": 0.1,
@@ -30,10 +32,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_enemy_test",
-    "path": "sprites/spr_enemy_test/spr_enemy_test.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

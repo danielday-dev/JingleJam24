@@ -41,7 +41,7 @@ switch (currentGameState) {
 				}
 				if (tiles[mx][my].tileType == TileType.Enemy) {
 					targetGameState = GameState.Combat;
-					// TODO: Setup combat here.
+					combatEnemies = tiles[mx][my].args.enemies;
 				}
 				
 				//targetGameState = GameState.Combat;

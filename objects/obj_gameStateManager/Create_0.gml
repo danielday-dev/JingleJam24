@@ -13,3 +13,7 @@ random_set_seed(get_timer());
 var boardSize = 5;
 tiles = [];
 GameState_generateLevel(boardSize * 2, boardSize);
+
+runTimer = 600;
+
+combatEnemies = [ ];

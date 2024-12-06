@@ -46,8 +46,9 @@ function GameState_generateLevel(_width, _height) {
 				tiles[ix][iy] = new Tile(tileType, {});
 				switch (tileType) {
 					case TileType.Enemy: {
-						var enemy = instance_create_depth(ix, iy, depth - 100, obj_enemy_test);
-						tiles[ix][iy] = new Tile(tileType, { enemy: enemy, } ); 
+						var enemy = instance_create_depth(ix, iy, depth, obj_enemy_test);
+						var enemy2 = instance_create_depth(ix, iy, depth, obj_enemy_test);
+						tiles[ix][iy] = new Tile(tileType, { enemies: [ enemy, enemy2 ], } ); 
 					} break;
 				}
 			}

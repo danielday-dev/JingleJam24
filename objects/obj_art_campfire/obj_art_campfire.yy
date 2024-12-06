@@ -6,8 +6,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "GUI",
-    "path": "folders/Objects/GUI.yy",
+    "name": "Campfire",
+    "path": "folders/Objects/GUI/Campfire.yy",
   },
   "parentObjectId": {
     "name": "obj_gui_base",

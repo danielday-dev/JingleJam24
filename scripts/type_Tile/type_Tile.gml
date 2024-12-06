@@ -39,8 +39,11 @@ function Tile(_tileType, _args) constructor {
 		
 		switch (tileType) {
 			case TileType.Enemy: {
-				with (args.enemy) {
+				with (args.enemies[0]) {
 					visible = other.discovered;
+				}
+				for (var i = 1; i < array_length(args.enemies); i++) {
+					args.enemies[i].visible = false;	
 				}
 			} break;
 			case TileType.Campfire: {

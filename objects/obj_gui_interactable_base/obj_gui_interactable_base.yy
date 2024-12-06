@@ -1,20 +1,18 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_enemy_test",
+  "name": "obj_gui_interactable_base",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Entities",
-    "path": "folders/Objects/Entities.yy",
+    "name": "GUI",
+    "path": "folders/Objects/GUI.yy",
   },
-  "parentObjectId": {
-    "name": "obj_entity_base",
-    "path": "objects/obj_entity_base/obj_entity_base.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -31,8 +29,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_enemy_test",
-    "path": "sprites/spr_enemy_test/spr_enemy_test.yy",
+    "name": "spr_gui_interactable_base",
+    "path": "sprites/spr_gui_interactable_base/spr_gui_interactable_base.yy",
   },
   "spriteMaskId": null,
   "visible": true,
