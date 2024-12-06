@@ -17,6 +17,10 @@ if (currentGameState != targetGameState) {
 				setGUIVisibility("Campfire", enteringState); 
 				Animator_dispatch(0.2, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.4 : 0.0 });
 			} break;
+			case GameState.Combat: {
+				setGUIVisibility("Combat", enteringState); 
+				Animator_dispatch(0.3, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.9 : 0.0 });
+			} break;
 		}
 	}
 	currentGameState = targetGameState;
@@ -35,6 +39,10 @@ switch (currentGameState) {
 				if (tiles[mx][my].tileType == TileType.Campfire) {
 					targetGameState = GameState.Campfire;
 				}
+				if (tiles[mx][my].tileType == TileType.Enemy) {
+					targetGameState = GameState.Combat;
+					// TODO: Setup combat here.
+				}
 				
 				//targetGameState = GameState.Combat;
 				Animator_dispatch(0.5, AnimationType.Position, AnimationInterpolation.EaseSine,  {
@@ -46,6 +54,7 @@ switch (currentGameState) {
 		}
 	} break;
 	
+	case GameState.Combat: 
 	case GameState.Campfire: {
 		if (mouse_check_button_pressed(mb_left)) targetGameState = GameState.Level;
 	} break;

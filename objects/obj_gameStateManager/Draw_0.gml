@@ -1,6 +1,6 @@
 switch (currentGameState) {
 	case GameState.Campfire:
-	
+	case GameState.Combat:
 	case GameState.Level: {
 		var xLen = array_length(tiles);
 		for (var ix = 0; ix < xLen; ix++) {
@@ -9,10 +9,6 @@ switch (currentGameState) {
 				tiles[ix][iy].draw(ix, iy);
 			}
 		}
-	} break;
-	
-	case GameState.Combat: {
-		
 	} break;
 }
 
