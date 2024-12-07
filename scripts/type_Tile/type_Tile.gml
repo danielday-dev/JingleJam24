@@ -12,13 +12,18 @@ enum TileType {
 
 #macro TILESCALE 64
 
-function Tile(_tileType, _args) constructor {
+function Tile(_tileType, _args = {}) constructor {
 	tileType = _tileType;
 	floorIndex = irandom(sprite_get_number(spr_floor_discovered));
 	discovered = false;
 	discoveredNeighbour = false;
 	
 	args = _args;
+	
+	switch (_tileType) {
+		case TileType.Event:
+		case TileType.Campfire: args.used = false; break;	
+	}
 	
 	static draw = function(_x, _y) {
 		if (tileType == TileType.None) return;
@@ -47,7 +52,10 @@ function Tile(_tileType, _args) constructor {
 				}
 			} break;
 			case TileType.Campfire: {
-				if (discovered) draw_sprite(spr_tile_campfire, 0, hx, hy - 10);
+				if (discovered) draw_sprite(spr_tile_campfire, args.used, hx, hy - 10);
+			} break; 	
+			case TileType.Event: {
+				if (discovered) draw_sprite(spr_tile_chest, args.used, hx, hy - 10);
 			} break; 	
 		}
 	}	

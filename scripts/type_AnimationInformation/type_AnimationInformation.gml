@@ -1,5 +1,6 @@
 enum AnimationType {
 	Position,
+	Custom,
 	GUIFade, BackgroundFade,
 };
 enum AnimationInterpolation {
@@ -45,6 +46,10 @@ function AnimationInformation(_totalSeconds, _type, _interpolation, _args) const
 					x = pos.x;
 					y = pos.y;
 				}
+			} break;
+			case AnimationType.Custom: {
+				if (!hasAllArgs([ "func" ])) break;
+				args.func(getTime(), args);
 			} break;
 			case AnimationType.GUIFade:
 			case AnimationType.BackgroundFade: {

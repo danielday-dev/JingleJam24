@@ -9,7 +9,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "GUI",
-    "path": "folders/Objects/GUI.yy",
+    "path": "folders/Objects/GUI/GUI.yy",
   },
   "parentObjectId": null,
   "persistent": false,

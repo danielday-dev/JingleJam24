@@ -16,4 +16,5 @@ GameState_generateLevel(boardSize * 2, boardSize);
 
 runTimer = 600;
 
+playerPath = [];
 combatEnemies = [ ];

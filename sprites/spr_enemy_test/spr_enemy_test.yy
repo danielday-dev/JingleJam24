@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Entities",
-    "path": "folders/Sprites/Entities.yy",
+    "name": "Enemies",
+    "path": "folders/Sprites/Entities/Enemies.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

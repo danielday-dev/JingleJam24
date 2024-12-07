@@ -1,0 +1,3 @@
+function Combat_getMinRemainingMoves() {
+	
+}

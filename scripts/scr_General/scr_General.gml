@@ -29,8 +29,12 @@ function registerGUIElement(_layerName, _id) {
 	id.visible = false;
 }
 
-
+function draw_debugEnabled() {
+	return keyboard_check(vk_f4);	
+}
 function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures = 1) {
+	if (draw_debugEnabled()) draw_rectangle(_x, _y, _x + _width, _y + _height, true);
+	
 	var negative = _number < 0;
 	_number = abs(_number);
 	
