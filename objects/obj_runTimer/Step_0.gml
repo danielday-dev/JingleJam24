@@ -14,3 +14,5 @@ if (change > 0) {
 	if (displayTimer < target)
 		displayTimer = target;
 }
+
+tempDown = 0;

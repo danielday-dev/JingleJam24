@@ -21,10 +21,10 @@ for (var i = 1; i < array_length(combatEntities); i++)
 	minTime = min(minTime, combatEntities[i].entityTurnTimer);
 	
 if (minTime > 0) {
-	obj_gameStateManager.runTimer--;
+	GameState_consumeTime(1);
 	for (var i = 0; i < array_length(combatEntities); i++)
 		combatEntities[i].entityTurnTimer--;
-	cooldown = 0.2;
+	cooldown = 0.4;
 	return;
 }
 

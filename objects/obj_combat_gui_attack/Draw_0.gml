@@ -8,16 +8,21 @@ var timeCost = move.timeCost;
 
 var border = 8;
 var timeSize = new Vector2(16, 16);
-//draw_number(
-//	x + sprite_width - (border + timeSize.x), y + border,
-//	timeSize.x, timeSize.y, 
-//	timeCost
-//);
+
+
 draw_number(
-	x + border, y + border,
-	sprite_width - (border * 2), timeSize.y, 
+	x + (sprite_width / 2) + border, y + border,
+	(sprite_width / 2) - (border * 2), timeSize.y, 
 	timeCost
 );
+var temp = obj_player.plannedMove;
+obj_player.plannedMove = moveIndex;
+draw_number(
+	x + border, y + border,
+	(sprite_width / 2) - (border * 2), timeSize.y, 
+	-Combat_getEntityDamage(obj_player.id)
+);
+obj_player.plannedMove = temp;
 
 var dl = x + border;
 var dr = (x + sprite_width) - border;

@@ -5,5 +5,6 @@ disabledTarget = new Vector2(-50, 0);
 canInteractFunc = function() { 
 	return 
 		obj_player.entityTurnTimer <= 0 && 
-		array_length(obj_player.combatAvailableMagic) > magicIndex; 
+		array_length(obj_player.combatAvailableMagic) > magicIndex &&
+		!obj_player.combatAvailableMagic[magicIndex].used; 
 } 

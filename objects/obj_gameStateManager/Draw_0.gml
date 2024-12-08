@@ -10,7 +10,6 @@ var inputActive = !Animator_isActive();
 if (!inputActive || currentGameState != GameState.Level) { 
 	return;
 }
-obj_runTimer.tempDown = 0;
 
 var mx = floor(mouse_x / TILESCALE);	
 var my = floor(mouse_y / TILESCALE);

@@ -9,6 +9,7 @@ combatAvailableMoves = [
 	getCombatMove(CombatMoves.Axe_Wood),
 ];
 plannedMove = irandom(array_length(combatAvailableMoves) - 1);
+lastMove = -1;
 
 combatAvailableMagic = [];
 

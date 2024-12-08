@@ -1,2 +1,2 @@
-event_inherited();
-show_debug_message("heyo");
+obj_player.combatAvailableMagic[magicIndex].active = 
+	!obj_player.combatAvailableMagic[magicIndex].active;

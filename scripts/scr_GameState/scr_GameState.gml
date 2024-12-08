@@ -1,5 +1,8 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+function GameState_consumeTime(_time) {
+	obj_gameStateManager.runTimer = max(0, obj_gameStateManager.runTimer - _time);
+}
+
+
 function GameState_tileExists(_x, _y){
 	var xLen = array_length(obj_gameStateManager.tiles);
 	if (_x < 0 || xLen <= _x) return false;
@@ -38,6 +41,9 @@ function GameState_finishTile(_x, _y){
 	if (!GameState_tileExists(_x, _y)) return;
 	
 	switch (obj_gameStateManager.tiles[_x][_y].tileType) {
+		case TileType.Entrance: break;
+		case TileType.Exit: break;
+		
 		case TileType.Event:
 		case TileType.Campfire: {
 			obj_gameStateManager.tiles[_x][_y].args.used = true;
@@ -67,7 +73,9 @@ function GameState_generateLevel(_width, _height) {
 		// Get start and end.
 		var midPoint = _width / 2;
 		var startPoint = new Vector2(irandom_range(0, midPoint - 1), irandom(_height - 1));
-		var endPoint = new Vector2(irandom_range(midPoint, _width - 1), irandom(_height - 1));
+		var endPoint = new Vector2(irandom_range(midPoint, _width - 1), irandom_range(1, _height - 1));
+		tiles[_width - 1][0].tileType = TileType.None;
+		tiles[_width - 2][0].tileType = TileType.None;
 		
 		// Try to remove some tiles.
 		var removeCount = 15;

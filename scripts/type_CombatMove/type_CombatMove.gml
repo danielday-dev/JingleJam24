@@ -28,10 +28,10 @@ function getCombatMove(_enum) {
 		case CombatMoves.Dagger_Gold: return new CombatMove(3, 2, 10);
 		case CombatMoves.Dagger_Temporal: return new CombatMove(4, 1, 11);
 		
-		case CombatMoves.Staff_Wood: return new CombatMove(2, 7, 12);
-		case CombatMoves.Staff_Iron: return new CombatMove(3, 8, 13);
-		case CombatMoves.Staff_Gold: return new CombatMove(4, 9, 14);
-		case CombatMoves.Staff_Temporal: return new CombatMove(5, 10, 15);
+		case CombatMoves.Staff_Wood: return new CombatMove(2, 15, 12);
+		case CombatMoves.Staff_Iron: return new CombatMove(3, 20, 13);
+		case CombatMoves.Staff_Gold: return new CombatMove(4, 35, 14);
+		case CombatMoves.Staff_Temporal: return new CombatMove(5, 45, 15);
 	}
 	return undefined;
 }

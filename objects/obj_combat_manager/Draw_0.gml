@@ -102,7 +102,6 @@ with (obj_gameStateManager) {
 	}
 }
 
-obj_runTimer.tempDown = 0;
 if (obj_player.plannedMove != -1) {
 	var move = obj_player.combatAvailableMoves[obj_player.plannedMove]
 	obj_runTimer.tempDown = move.timeCost;

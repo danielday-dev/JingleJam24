@@ -1,3 +1,4 @@
+disabled = !canInteractFunc();
 if (!visible || !hoverable || !GUI_canInteract()) {
 	if (GUIElement_hovered == id) 
 		GUIElement_hovered = noone;

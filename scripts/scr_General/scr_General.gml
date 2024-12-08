@@ -55,7 +55,20 @@ function draw_panel(_x, _y, _width, _height, state = 0, scale = 1.0) {
 	draw_sprite_part_ext(sprite, state, tw * 2, th, tw,th, right - tws, oy, scale, ih, c_white, 1.);
 }
 
-function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures = 1) {
+function draw_text_bound(_x, _y, _width, _height, _text, scale = 1.0, _color = make_color_rgb(246, 214, 189)) {
+	if (draw_debugEnabled()) draw_rectangle(_x, _y, _x + _width, _y + _height, true);
+	
+	var sw = _width / scale, sh = _height / scale;
+	var textWidth = string_width_ext(_text, -1, sw) * scale;
+	var textHeight = string_height_ext(_text, -1, sw) * scale;
+	
+	var cx = _x + (_width * 0.5), cy = _y + (_height * 0.5);
+	var sx = cx - (textWidth * 0.5), sy = cy - (textHeight * 0.5);
+	//draw_text_ext_color(sx, sy, _text, -1, _width, _color, _color, _color, _color, 1.0);
+	draw_text_ext_transformed_color(sx, sy, _text, -1, sw, scale, scale, 0, _color, _color, _color, _color, 1.0);
+}
+
+function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures = 1, redOverwrite = false) {
 	if (draw_debugEnabled()) draw_rectangle(_x, _y, _x + _width, _y + _height, true);
 	
 	var negative = _number < 0;
@@ -82,7 +95,7 @@ function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures =
 	}
 	
 	
-	var baseColor = negative ? c_red : c_white;
+	var baseColor = (negative || redOverwrite) ? c_red : c_white;
 	var sprite = _gold ? spr_icons_numbers_gold : spr_icons_numbers;
 	var spriteWidth = sprite_get_width(sprite);
 	var spriteHeight = sprite_get_height(sprite);
@@ -127,6 +140,10 @@ function draw_healthBar(_x, _y, _w, _h, _health, _maxHealth, _potentialDamage = 
 		var potentialHp = max(0, hp - _potentialDamage);
 		if (hp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (hp / _maxHealth)), _y + border + th, potentialHpCol, potentialHpCol, potentialHpCol, potentialHpCol, false);
 		if (potentialHp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (potentialHp / _maxHealth)), _y + border + th, hpCol, hpCol, hpCol, hpCol, false);
+	} else if (_potentialDamage < 0) {
+		var potentialHp = min(_maxHealth, hp - _potentialDamage);
+		if (hp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (potentialHp / _maxHealth)), _y + border + th, potentialHpCol, potentialHpCol, potentialHpCol, potentialHpCol, false);
+		if (potentialHp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (hp / _maxHealth)), _y + border + th, hpCol, hpCol, hpCol, hpCol, false);
 	} else {
 		if (hp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (hp / _maxHealth)), _y + border + th, hpCol, hpCol, hpCol, hpCol, false);
 	}
