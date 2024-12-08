@@ -59,17 +59,89 @@ function GameState_generateLevel(_width, _height) {
 		for (var ix = 0; ix < _width; ix++) {
 			tiles[ix] = [];
 			for (var iy = 0; iy < _height; iy++) {
-				var tileType = irandom(TileType.Count - 1);
-				
-				tiles[ix][iy] = new Tile(tileType, {});
-				switch (tileType) {
+				tiles[ix][iy] = new Tile(TileType.Empty);
+				tiles[ix][iy].discovered = true;
+			}
+		}
+		
+		// Get start and end.
+		var midPoint = _width / 2;
+		var startPoint = new Vector2(irandom_range(0, midPoint - 1), irandom(_height - 1));
+		var endPoint = new Vector2(irandom_range(midPoint, _width - 1), irandom(_height - 1));
+		
+		// Try to remove some tiles.
+		var removeCount = 15;
+		var removeTries = 20;
+		while (removeCount > 0 && removeTries > 0) {
+			var pos = new Vector2(random(_width - 1), irandom(_height - 1));
+			if (pos.equal(startPoint) || pos.equal(endPoint)) continue;
+		
+			var oldTile = tiles[pos.x][pos.y];
+			if (oldTile.tileType == TileType.None) continue;
+			
+			// Try to remove.
+			removeTries--;
+			tiles[pos.x][pos.y] = new Tile(TileType.None);
+			var checkPoints = [ startPoint, new Vector2(1, 1), new Vector2(1, _height - 2), new Vector2(_width - 2, 1), new Vector2(_width - 2, _height - 2) ]; 
+			var pathValid = true;
+			for (var i = 0; i < array_length(checkPoints) && pathValid; i++)
+				if (array_length(GameState_pathFind(checkPoints[i].x, checkPoints[i].y, endPoint.x, endPoint.y)) == 0)
+					pathValid = false;	
+			if (!pathValid) {
+				// Remove failed.
+				tiles[pos.x][pos.y] = oldTile;
+			} else {
+				// Remove success.
+				removeCount--;
+			}
+		}
+		
+		// Forget tiles.
+		for (var ix = 0; ix < _width; ix++)
+			for (var iy = 0; iy < _height; iy++)
+				tiles[ix][iy].discovered = false;
+		
+		// Fill tiles.
+		function placeRandom(_minCount, _maxCount, _tileType, _width, _height) {
+			var count = irandom_range(_minCount, _maxCount);
+			// Get empty tiles.
+			var emptyTiles = [];
+			for (var ix = 0; ix < _width; ix++)
+				for (var iy = 0; iy < _height; iy++)
+					if (tiles[ix][iy].tileType == TileType.Empty)
+						emptyTiles[array_length(emptyTiles)] = new Vector2(ix, iy);
+			// Place.
+			var len = array_length(emptyTiles);
+			emptyTiles = array_shuffle(emptyTiles, 0, len);
+			for (var i = 0; i < len && i < count; i++) {
+				var pos = emptyTiles[i];
+				args = {};
+				switch (_tileType) {
 					case TileType.Enemy: {
-						var enemy = instance_create_depth(ix, iy, depth, obj_enemy_test);
-						var enemy2 = instance_create_depth(ix, iy, depth, obj_enemy_test);
-						tiles[ix][iy] = new Tile(tileType, { enemies: [ enemy, enemy2 ], } ); 
+						var enemy = instance_create_depth(pos.x, pos.y, depth, obj_enemy_test);
+						var enemy2 = instance_create_depth(pos.x, pos.y, depth, obj_enemy_test);
+						args.enemies = [ enemy, enemy2 ]; 
 					} break;
 				}
+				tiles[pos.x][pos.y] = new Tile(_tileType, args);
 			}
+		}
+		
+		
+		// Set tiles.
+		tiles[startPoint.x][startPoint.y] = new Tile(TileType.Entrance);
+		tiles[endPoint.x][endPoint.y] = new Tile(TileType.Exit);
+		
+		// Set activities.
+		placeRandom(5, 8, TileType.Campfire, _width, _height);
+		placeRandom(2, 5, TileType.Event, _width, _height);
+		placeRandom(8, 16, TileType.Enemy, _width, _height);
+		
+		// Setup player.
+		with (obj_player) {
+			x = startPoint.x;
+			y = startPoint.y;
+			GameState_discoverTile(x, y);
 		}
 	}
 }
@@ -92,10 +164,10 @@ function GameState_pathFind(_fx, _fy, _tx, _ty) {
 	
 	var start = new Vector2(_fx, _fy);
 	var target = new Vector2(_tx, _ty);
-	nodes = [
+	var nodes = [
 		new Node(start, 0, target.subtract(start).manhattan(), [ start ])
 	];
-	visitedNodes = [];
+	var visitedNodes = [];
 	
 	var checks = [
 		new Vector2(1, 0),

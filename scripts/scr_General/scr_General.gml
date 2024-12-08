@@ -32,6 +32,29 @@ function registerGUIElement(_layerName, _id) {
 function draw_debugEnabled() {
 	return keyboard_check(vk_f4);	
 }
+
+function draw_panel(_x, _y, _width, _height, state = 0, scale = 1.0) {
+	var sprite = spr_gui_interactable_base;
+	var tw = sprite_get_width(sprite) / 3, th = sprite_get_height(sprite) / 3;
+	var tws = tw * scale, ths = th * scale;
+	var right = _x + _width, bottom = _y + _height;
+	
+	draw_sprite_part_ext(sprite, state, 0, 0, tw, th, _x, _y, scale, scale, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, tw * 2, th * 2, tw, th, right - tws, bottom - ths, scale, scale, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, tw * 2, 0, tw, th, right - tws, _y, scale, scale, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, 0, th * 2, tw, th, _x, bottom - ths, scale, scale, c_white, 1.0);
+
+	var ow = _width - (tws * 2), oh = _height - (ths * 2);
+	var ox = _x + tws, oy = _y + ths;
+	var iw = ow / tw , ih = oh / th;
+
+	draw_sprite_part_ext(sprite, state, tw, th, tw, th, ox, oy, iw, ih, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, tw, 0, tw, th, ox, _y, iw, scale, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, tw, th * 2, tw, th, ox, bottom - ths, iw, scale, c_white, 1.0);
+	draw_sprite_part_ext(sprite, state, 0, th, tw, th, _x, oy, scale, ih, c_white, 1.);
+	draw_sprite_part_ext(sprite, state, tw * 2, th, tw,th, right - tws, oy, scale, ih, c_white, 1.);
+}
+
 function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures = 1) {
 	if (draw_debugEnabled()) draw_rectangle(_x, _y, _x + _width, _y + _height, true);
 	
@@ -55,7 +78,7 @@ function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures =
 			allNine = false;
 	if (allNine && fraction > 0) {
 		array_insert(numbers, 0, 0);
-		var len = array_length(numbers);
+		len = array_length(numbers);
 	}
 	
 	
@@ -88,4 +111,26 @@ function draw_number(_x, _y, _width, _height, _number, _gold = false, _figures =
 	}
 }
 
+function draw_healthBar(_x, _y, _w, _h, _health, _maxHealth, _potentialDamage = 0) {
+	draw_panel(_x, _y, _w, _h, 0, 0.5);
+	var border = 6;
+	
+	var tw = _w - (border * 2), th = _h - (border * 2);
+	
+	var hpCol = make_color_rgb(246, 214, 189);
+	var potentialHpCol = make_color_rgb(172, 107, 38);
+	var backCol = make_color_rgb(8, 20, 30);
+	draw_rectangle_color(_x + border, _y + border, _x + border + tw, _y + border + th, backCol, backCol, backCol, backCol, false);
+
+	var hp = max(0, _health);
+	if (_potentialDamage > 0) {
+		var potentialHp = max(0, hp - _potentialDamage);
+		if (hp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (hp / _maxHealth)), _y + border + th, potentialHpCol, potentialHpCol, potentialHpCol, potentialHpCol, false);
+		if (potentialHp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (potentialHp / _maxHealth)), _y + border + th, hpCol, hpCol, hpCol, hpCol, false);
+	} else {
+		if (hp > 0) draw_rectangle_color(_x + border, _y + border, _x + border + (tw * (hp / _maxHealth)), _y + border + th, hpCol, hpCol, hpCol, hpCol, false);
+	}
+	
+
+}
 

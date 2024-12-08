@@ -1,0 +1,1 @@
+Combat_performMove(obj_player.id, moveIndex);

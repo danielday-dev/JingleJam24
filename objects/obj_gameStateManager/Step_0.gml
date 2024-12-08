@@ -5,6 +5,8 @@ if (array_length(playerPath) > 0) {
 	var pos = playerPath[0];
 	array_delete(playerPath, 0, 1);
 	
+	obj_runTimer.tempDown = 0;
+	
 	runTimer--;
 	GameState_discoverTile(pos.x, pos.y);
 	Animator_dispatch(0.5, AnimationType.Position, AnimationInterpolation.EaseSine,  {
@@ -30,8 +32,11 @@ if (currentGameState != targetGameState) {
 		///////////////////////////////////////////////////////
 		switch (enterGameStates[stateIndex]) {
 			case GameState.Level: {
-				if (enteringState)
+				if (enteringState) {
 					GameState_finishTile(obj_player.x, obj_player.y);
+				} else {
+					obj_runTimer.tempDown = 0;
+				}
 			} break;
 			case GameState.Campfire: {
 				setGUIVisibility("Campfire", enteringState); 
@@ -42,6 +47,7 @@ if (currentGameState != targetGameState) {
 					with (obj_combat_manager) {
 						variableScale = 0.5;
 					}
+					obj_player.entityTurnTimer = 0;
 				}
 				setGUIVisibility("Combat", enteringState); 
 				Animator_dispatch(0.3, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.9 : 0.0 });
@@ -78,7 +84,15 @@ switch (currentGameState) {
 		}
 	} break;
 	
-	case GameState.Combat: 
+	case GameState.Combat:  {		
+		if (array_length(combatEnemies) <= 0) {
+			tiles[obj_player.x][obj_player.y] = new Tile(TileType.Empty);
+			targetGameState = GameState.Level;
+			GameState_discoverTile(obj_player.x, obj_player.y);
+		}
+		
+		if (mouse_check_button_pressed(mb_left) && GUIElement_hovered == noone) targetGameState = GameState.Level;
+	} break;
 	case GameState.Campfire: {
 		if (mouse_check_button_pressed(mb_left) && GUIElement_hovered == noone) targetGameState = GameState.Level;
 	} break;
