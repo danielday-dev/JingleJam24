@@ -5,5 +5,5 @@ if (!visible || !hoverable || !GUI_canInteract()) {
 	return;
 }
 
-if (GUIElement_hovered == noone) 
+if (GUIElement_hovered <= 0) // IDK WHY ITS NOT 'noone' BUT OKAY
 	GUIElement_hovered = id;
