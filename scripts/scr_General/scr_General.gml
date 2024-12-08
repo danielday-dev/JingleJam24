@@ -8,7 +8,6 @@ function setGUIVisibility(_layerName, _visible) {
 	if (elements == undefined) return;
 	
 	var len = array_length(elements);
-	
 	for (var i = 0; i < len; i++) {
 		elements[i].visible = _visible;
 	}
@@ -19,14 +18,39 @@ function registerGUIElement(_layerName, _id) {
 
 	var arr = ds_map_find_value(global.guiDict, _layerName);
 	if (arr == undefined) {
-		arr = [ id ];	
+		arr = [ _id ];	
 		ds_map_add(global.guiDict, _layerName, arr);	
 	} else {
-		arr[array_length(arr)] = id;
+		arr[array_length(arr)] = _id;
 	}
 	
-	id.depth = -9999;
-	id.visible = false;
+	_id.depth = -9999;
+	_id.visible = false;
+	_id.__guiLayer = _layerName;
+}
+function unregisterGUIElement(_id) {
+	if (!variable_global_exists("guiDict")) return;
+	
+	var arr = ds_map_find_value(global.guiDict, _id.__guiLayer);
+	if (arr == undefined) return;
+	
+	var len = array_length(arr);
+	for (var i = 0; i < len; i++) {
+		if (arr[i] == _id) {
+			array_delete(arr, i, 1);
+			break;
+		}
+	}
+	if (array_length(arr) == 0)
+		ds_map_delete(global.guiDict, _id.__guiLayer)
+
+}
+
+
+function shakeScreen(_amount) {
+	with (obj_screenShake) {
+		shakeAmount = max(shakeAmount, _amount);
+	}
 }
 
 function draw_debugEnabled() {

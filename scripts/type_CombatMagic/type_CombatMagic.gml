@@ -38,7 +38,7 @@ function CombatMagic(_type) constructor {
 			case CombatMagics.RepeatN: return "Attacks will hit the target n times based on how many enemies there are.";
 		
 			case CombatMagics.TripleDamage: return "Attacks will deal 3x damage.";
-			case CombatMagics.Combo: return "Repeating the same attack multipliers damage by combo length [Active upon broken combo].";
+			case CombatMagics.Combo: return "Repeating the same attack move multiplies damage by combo duration, up to 5\n[Active untill combo broken].";
 		
 			case CombatMagics.MoveTimeAdditional: return "Attack time is added to the attack damage.";
 		

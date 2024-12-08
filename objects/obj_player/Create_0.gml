@@ -9,4 +9,5 @@ plannedMove = -1;
 combatAvailableMagic = [
 	getCombatMagic(CombatMagics.Repeat2),
 	getCombatMagic(CombatMagics.Combo),
+	getCombatMagic(CombatMagics.AOE),
 ];

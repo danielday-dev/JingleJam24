@@ -1,18 +1,18 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_fader_background",
-  "eventList": [],
+  "name": "obj_screenShake",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":72,"eventType":8,"isDnD":false,},
+  ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Background",
-    "path": "folders/Objects/Background.yy",
+    "name": "Objects",
+    "path": "folders/Objects.yy",
   },
-  "parentObjectId": {
-    "name": "obj_fader_base",
-    "path": "objects/obj_fader_base/obj_fader_base.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -26,9 +26,7 @@
   "physicsShape": 1,
   "physicsShapePoints": [],
   "physicsStartAwake": true,
-  "properties": [
-    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"depth","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"-9000","varType":0,},
-  ],
+  "properties": [],
   "solid": false,
   "spriteId": null,
   "spriteMaskId": null,

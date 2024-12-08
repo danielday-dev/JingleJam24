@@ -4,9 +4,13 @@
   "name": "obj_enemy_chronos",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":11,"eventType":7,"isDnD":false,},
   ],
   "managed": true,
-  "overriddenProperties": [],
+  "overriddenProperties": [
+    {"resourceType":"GMOverriddenProperty","resourceVersion":"1.0","name":"","objectId":{"name":"obj_entity_base","path":"objects/obj_entity_base/obj_entity_base.yy",},"propertyId":{"name":"entityHealthMax","path":"objects/obj_entity_base/obj_entity_base.yy",},"value":"500",},
+  ],
   "parent": {
     "name": "Entities",
     "path": "folders/Objects/Entities.yy",

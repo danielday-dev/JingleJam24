@@ -25,6 +25,10 @@ if (currentGameState != targetGameState) {
 	for (var stateIndex = 0; stateIndex < stateLen; stateIndex++) {
 		var enteringState = enterState[stateIndex];
 		
+		if (enterGameStates[stateIndex] != GameState.Level) {
+			Stars_bringToDepth(enteringState ? -9500 : obj_starManager.depth);
+		}
+		
 		///////////////////////////////////////////////////////
 		//		Handle on state change.
 		///////////////////////////////////////////////////////
@@ -74,6 +78,13 @@ if (currentGameState != targetGameState) {
 ///////////////////////////////////////////////////////
 switch (currentGameState) {
 	case GameState.Level: {
+		if (runTimer <= 0) {
+			targetGameState = GameState.Combat;
+			combatEnemies = [ instance_create_depth(x, y, depth, obj_enemy_chronos) ];
+			runTimer = bossAttackTime;			
+			break;
+		}
+		
 		if (mouse_check_button_pressed(mb_left)) {
 			var mx = floor(mouse_x / TILESCALE);	
 			var my = floor(mouse_y / TILESCALE);	
@@ -105,14 +116,5 @@ switch (currentGameState) {
 			targetGameState = GameState.Level;
 			GameState_discoverTile(obj_player.x, obj_player.y);
 		}
-		
-		if (mouse_check_button_pressed(mb_left) && GUIElement_hovered == noone) targetGameState = GameState.Level;
-	} break;
-	case GameState.Campfire: {
-		if (mouse_check_button_pressed(mb_left) && GUIElement_hovered == noone) targetGameState = GameState.Level;
-	} break;
-	case GameState.Exit: {
-		if (mouse_check_button_pressed(mb_left) && GUIElement_hovered == noone) 
-			targetGameState = GameState.Level;
 	} break;
 }

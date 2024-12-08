@@ -4,10 +4,30 @@ function Combat_takeTurn(_entity) {
 		_entity.entityTurnTimer = 999;
 		return;
 	}
-	
+		
 	Combat_performMove(_entity, _entity.plannedMove);
-	_entity.plannedMove = irandom(array_length(_entity.combatAvailableMoves) - 1);
+	_entity.plannedMove = irandom(len - 1);
 }
+
+function Combat_damageEntity(_entity, _damage) {
+	_entity.entityHealth -= _damage;
+	shakeScreen(_damage);
+
+	if (_entity == obj_player.id) {
+		if (obj_player.entityHealth <= 0) room_goto(rm_lose);		
+		return;
+	} 
+					
+	with (obj_gameStateManager) {
+		for (var i = 0; i < array_length(combatEnemies); i++) {
+			if (combatEnemies[i].entityHealth > 0) continue;
+			instance_destroy(combatEnemies[i]);
+			array_delete(combatEnemies, i, 1);
+			i--;
+		}
+	}
+}
+
 
 function Combat_getEntityDamage(_entity) {
 	if (_entity.plannedMove == -1) return 0;
@@ -22,7 +42,7 @@ function Combat_getEntityDamage(_entity) {
 		if (!magic.isActive()) continue;
 		
 		switch (magic.type) {
-			case CombatMagics.Combo: if (_entity.lastMove == _entity.plannedMove) damage += move.damage * (magic.duration - 1); break;
+			case CombatMagics.Combo: if (_entity.lastMove == _entity.plannedMove) damage += move.damage * min(5, (magic.duration - 1)); break;
 			case CombatMagics.MoveTimeAdditional: damage += move.timeCost; break;
 			case CombatMagics.TimerDigitAdditional: damage += obj_gameStateManager.runTimer mod 10; break;
 		}
@@ -73,8 +93,34 @@ function Combat_calculatePotentialDamage(_entity) {
 	
 	// Check for AOE.
 	var hasAOE = false;
-	var len = array_length(_entity.combatAvailableMagic);
-	for (var i = 0; i < len && !hasAOE; i++) {
+	for (var i = 0; i < array_length(obj_player.combatAvailableMagic) && !hasAOE; i++) {
+		var magic = obj_player.combatAvailableMagic[i];
+		if (!magic.isActive()) continue;
+		switch (magic.type) {
+			case CombatMagics.AOE: hasAOE = true; break;
+		}
+	}
+	
+	if (array_length(obj_gameStateManager.combatEnemies) <= 0 || 
+		(!hasAOE && _entity != obj_gameStateManager.combatEnemies[0])) return 0;
+	return Combat_getEntityDamage(obj_player.id);
+}
+
+function Combat_performMove(_entity, _moveIndex) {
+	if (obj_gameStateManager.runTimer <= 0 && 
+		instance_exists(obj_enemy_chronos) && _entity.id == obj_enemy_chronos.id) {
+		with (obj_enemy_chronos) {
+			event_user(1);
+		}
+		return;
+	}
+	
+	_entity.plannedMove = _moveIndex;
+	var move = _entity.combatAvailableMoves[_entity.plannedMove];
+	_entity.entityTurnTimer = move.timeCost;
+	
+	var hasAOE = false;
+	for (var i = 0; i < array_length(_entity.combatAvailableMagic) && !hasAOE; i++) {
 		var magic = _entity.combatAvailableMagic[i];
 		if (!magic.isActive()) continue;
 		switch (magic.type) {
@@ -82,17 +128,13 @@ function Combat_calculatePotentialDamage(_entity) {
 		}
 	}
 	
-	if (array_length(obj_gameStateManager.combatEnemies) <= 0 || (!hasAOE && _entity != obj_gameStateManager.combatEnemies[0])) return 0;
-	return Combat_getEntityDamage(obj_player.id);
-}
-
-function Combat_performMove(_entity, _moveIndex) {
-	_entity.plannedMove = _moveIndex;
-	var move = _entity.combatAvailableMoves[_entity.plannedMove];
-	_entity.entityTurnTimer = move.timeCost;
-	
 	if (array_length(obj_gameStateManager.combatEnemies) <= 0) return;
-	var _target = (_entity == obj_player.id) ? obj_gameStateManager.combatEnemies[0] : obj_player.id;
+	var _targets = 
+		(_entity == obj_player.id) ? 
+		(hasAOE ? 
+			obj_gameStateManager.combatEnemies : 
+			[ obj_gameStateManager.combatEnemies[0] ]) : 
+		[ obj_player.id ];
 	var _damage = Combat_getEntityDamage(_entity);
 	
 	for (var i = 0; i < array_length(_entity.combatAvailableMagic); i++)
@@ -102,7 +144,7 @@ function Combat_performMove(_entity, _moveIndex) {
 	
 	Animator_dispatch(0.6, AnimationType.Custom, AnimationInterpolation.Linear, {
 		entity: _entity,
-		target: _target,
+		targets: _targets,
 		damage: _damage,
 		crossed: false,
 		func: function(_t, _args) {
@@ -122,16 +164,8 @@ function Combat_performMove(_entity, _moveIndex) {
 				
 				if (!_args.crossed) {
 					_args.crossed = true;
-					_args.target.entityHealth -= _args.damage;
-					
-					with (obj_gameStateManager) {
-						for (var i = 0; i < array_length(combatEnemies); i++) {
-							if (combatEnemies[i].entityHealth > 0) continue;
-							instance_destroy(combatEnemies[i]);
-							array_delete(combatEnemies, i, 1);
-							i--;
-						}
-					}
+					for (var i = array_length(_args.targets) - 1; i >= 0; i--)
+						Combat_damageEntity(_args.targets[i], _args.damage);
 				}
 			}
 			

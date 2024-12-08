@@ -1,5 +1,3 @@
-draw_set_font(fnt_maki);
-
 enum GameState {
 	Level,
 	Combat,
@@ -18,7 +16,9 @@ var boardSize = 5;
 tiles = [];
 GameState_generateLevel(10, 5);
 
-runTimer = 1;
+runTimer = 300;
 
 playerPath = [];
-combatEnemies = [ ];
+combatEnemies = [];
+
+bossAttackTime = 42;
