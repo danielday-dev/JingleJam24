@@ -1,7 +1,7 @@
 event_inherited();
-entityScale = 2.0;
-renderScale = 2.2;
+entityScale = random_range(0.5, 1.0);
 
 combatAvailableMoves = [
 	getCombatMove(CombatMoves.Dagger_Wood),
+	getCombatMove(CombatMoves.Staff_Wood),
 ];

@@ -1,4 +1,4 @@
-var density = 0.01;
+var density = os_browser != browser_not_a_browser ? 0.005 : 0.01;
 var starCount = density * room_width * room_height;
 for (var i = 0; i < starCount; i++) {
 	var sx = irandom(room_width - 1);	

@@ -11,14 +11,19 @@ targetGameState = currentGameState;
 // Player setup.
 random_set_seed(get_timer());
 
-// Level board setup.
-var boardSize = 5;
-tiles = [];
-GameState_generateLevel(10, 5);
-
-runTimer = 300;
+runTimer = 500;
 
 playerPath = [];
 combatEnemies = [];
 
+level = 0;
+lootIsMagic = false;
+loot = undefined;
+
 bossAttackTime = 42;
+
+
+// Level board setup.
+var boardSize = 5;
+tiles = [];
+GameState_generateLevel(10, 5);

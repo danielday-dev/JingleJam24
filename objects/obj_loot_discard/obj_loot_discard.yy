@@ -1,18 +1,17 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_winlose_label",
+  "name": "obj_loot_discard",
   "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [
-    {"resourceType":"GMOverriddenProperty","resourceVersion":"1.0","name":"","objectId":{"name":"obj_gui_interactable_base","path":"objects/obj_gui_interactable_base/obj_gui_interactable_base.yy",},"propertyId":{"name":"text","path":"objects/obj_gui_interactable_base/obj_gui_interactable_base.yy",},"value":"Back to Menu",},
+    {"resourceType":"GMOverriddenProperty","resourceVersion":"1.0","name":"","objectId":{"name":"obj_gui_interactable_base","path":"objects/obj_gui_interactable_base/obj_gui_interactable_base.yy",},"propertyId":{"name":"text","path":"objects/obj_gui_interactable_base/obj_gui_interactable_base.yy",},"value":"Discard",},
   ],
   "parent": {
-    "name": "WinLose",
-    "path": "folders/Objects/GUI/WinLose.yy",
+    "name": "Loot",
+    "path": "folders/Objects/GUI/Loot.yy",
   },
   "parentObjectId": {
     "name": "obj_gui_interactable_base",

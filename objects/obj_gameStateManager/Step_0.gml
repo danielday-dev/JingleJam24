@@ -42,8 +42,13 @@ if (currentGameState != targetGameState) {
 				setGUIVisibility("Campfire", enteringState); 
 				Animator_dispatch(0.2, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.4 : 0.0 });
 			} break;
+			case GameState.Loot: {
+				setGUIVisibility("Loot", enteringState); 
+				Animator_dispatch(0.2, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.8 : 0.0 });
+			} break;
 			case GameState.Exit: {
 				setGUIVisibility("Exit", enteringState); 
+				if (!enteringState) level++;
 				Animator_dispatch(0.2, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.4 : 0.0 });
 			} break;
 			case GameState.Combat: {
@@ -54,7 +59,6 @@ if (currentGameState != targetGameState) {
 					obj_player.entityTurnTimer = 0;
 				} else {
 					with (obj_player) {
-						show_debug_message("we got here?");
 						for (var i = 0; i < array_length(combatAvailableMagic); i++) {
 							if (combatAvailableMagic[i].isActive()) {
 								combatAvailableMagic[i].used = true;
@@ -65,7 +69,8 @@ if (currentGameState != targetGameState) {
 					}
 				}
 				setGUIVisibility("Combat", enteringState); 
-				Animator_dispatch(0.3, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.9 : 0.0 });
+				if (enteringState || targetGameState == GameState.Level)
+					Animator_dispatch(0.3, AnimationType.BackgroundFade, AnimationInterpolation.Ease, { fade: enteringState ? 0.9 : 0.0 });
 			} break;
 			
 		}
@@ -112,8 +117,15 @@ switch (currentGameState) {
 	
 	case GameState.Combat:  {		
 		if (array_length(combatEnemies) <= 0) {
+			if (random(1.0) < 0.65) {
+				lootIsMagic = random(1.0) < 0.35;
+				loot = lootIsMagic ? Loot_getMagicDrop() : Loot_getMoveDrop();
+				targetGameState = GameState.Loot;
+			} else {
+				targetGameState = GameState.Level;
+			}
+			
 			tiles[obj_player.x][obj_player.y] = new Tile(TileType.Empty);
-			targetGameState = GameState.Level;
 			GameState_discoverTile(obj_player.x, obj_player.y);
 		}
 	} break;

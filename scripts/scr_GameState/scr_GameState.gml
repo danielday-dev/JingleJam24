@@ -126,9 +126,15 @@ function GameState_generateLevel(_width, _height) {
 				args = {};
 				switch (_tileType) {
 					case TileType.Enemy: {
-						var enemy = instance_create_depth(pos.x, pos.y, depth, obj_enemy_test);
-						var enemy2 = instance_create_depth(pos.x, pos.y, depth, obj_enemy_test);
-						args.enemies = [ enemy, enemy2 ]; 
+						var possibleEnemies = [ obj_enemy_test, obj_enemy_vermin, obj_enemy_slime ];
+						var possibleLen = array_length(possibleEnemies);
+						
+						var enemyCount = irandom_range(1, min(4, obj_gameStateManager.level + 1));
+						var enemies = [];
+						for (var j = 0; j < enemyCount; j++)
+							enemies[j] = instance_create_depth(pos.x, pos.y, depth, possibleEnemies[irandom(possibleLen - 1)]);
+						
+						args.enemies = enemies; 
 					} break;
 				}
 				tiles[pos.x][pos.y] = new Tile(_tileType, args);

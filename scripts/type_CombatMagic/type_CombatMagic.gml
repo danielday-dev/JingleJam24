@@ -76,17 +76,17 @@ function getCombatMagic(_enum) {
 	var magic = new CombatMagic(_enum);
 	
 	switch (_enum) {
-		case CombatMagics.AOE: { magic.cost = 4; } break;
-		case CombatMagics.Repeat2: { magic.cost = 3; } break;
-		case CombatMagics.RepeatN: { magic.cost = 5; } break;
+		case CombatMagics.AOE: { magic.cost = 6; } break;
+		case CombatMagics.Repeat2: { magic.cost = 7; } break;
+		case CombatMagics.RepeatN: { magic.cost = 11; } break;
 	
-		case CombatMagics.TripleDamage: { magic.cost = 6; } break;
-		case CombatMagics.Combo: { magic.cost = 4; } break;
+		case CombatMagics.TripleDamage: { magic.cost = 15; } break;
+		case CombatMagics.Combo: { magic.cost = 10; } break;
 	
-		case CombatMagics.MoveTimeAdditional: { magic.cost = 8; } break;
+		case CombatMagics.MoveTimeAdditional: { magic.cost = 7; } break;
 	
-		case CombatMagics.TimerDigitAdditional: { magic.cost = 3; } break;
-		case CombatMagics.TimerDigitIsFour: { magic.cost = 4; } break;
+		case CombatMagics.TimerDigitAdditional: { magic.cost = 9; } break;
+		case CombatMagics.TimerDigitIsFour: { magic.cost = 16; } break;
 	
 		case CombatMagics.Defend: { magic.cost = 3; } break;
 	}

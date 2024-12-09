@@ -23,8 +23,8 @@ function getCombatMove(_enum) {
 		case CombatMoves.Axe_Gold: return new CombatMove(8, 7, 6);
 		case CombatMoves.Axe_Temporal: return new CombatMove(10, 7, 7);
 		
-		case CombatMoves.Dagger_Wood: return new CombatMove(2, 3, 8);
-		case CombatMoves.Dagger_Iron: return new CombatMove(2, 2, 9);
+		case CombatMoves.Dagger_Wood: return new CombatMove(1, 4, 8);
+		case CombatMoves.Dagger_Iron: return new CombatMove(3, 3, 9);
 		case CombatMoves.Dagger_Gold: return new CombatMove(3, 2, 10);
 		case CombatMoves.Dagger_Temporal: return new CombatMove(4, 1, 11);
 		
